@@ -7,7 +7,14 @@ using  DG.Tweening;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private RectTransform assetPanel, createButton;
+    [SerializeField] private RectTransform controlsPanel, editPanel;
 
+    public void ShowControlPanel(int panelNumber)
+    {
+        controlsPanel.DOAnchorPosX(-(panelNumber-1) * 1132f, 0.5f, snapping:true)
+            .SetEase(Ease.InOutSine);
+    }
+    
     public void ShowCreateButton()
     {
         createButton
@@ -31,6 +38,18 @@ public class UIManager : MonoBehaviour
     public void HideAssetPanel()
     {
         assetPanel
+            .DOAnchorPosY(-550f, 0.6f)
+            .SetEase(Ease.InElastic);
+    }
+    public void ShowEditPanel()
+    {
+        editPanel
+            .DOAnchorPosY(-130f, 0.6f)
+            .SetEase(Ease.OutElastic);
+    }
+    public void HideEditPanel()
+    {
+        editPanel
             .DOAnchorPosY(-550f, 0.6f)
             .SetEase(Ease.InElastic);
     }
