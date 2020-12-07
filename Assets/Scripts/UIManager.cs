@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using  DG.Tweening;
+using DG.Tweening;
+
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private RectTransform assetPanel, createButton;
@@ -52,5 +53,6 @@ public class UIManager : MonoBehaviour
         editPanel
             .DOAnchorPosY(-550f, 0.6f)
             .SetEase(Ease.InElastic);
+        
     }
 }
