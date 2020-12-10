@@ -14,7 +14,7 @@ public class UIDisplayer : MonoBehaviour
 
     private RectTransform rectTransform;
 
-    private void Start()
+    private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
     }
