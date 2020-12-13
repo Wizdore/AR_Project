@@ -2,12 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using DG.Tweening;
+using UnityEngine.Events;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private UIDisplayer createButton, editButton, assetPanel, editPanel;
+
+    public UnityEvent<UIMode> OnUIModeChange;
 
     private void Start()
     {
@@ -19,17 +20,23 @@ public class UIManager : MonoBehaviour
         assetPanel.Hide();
         editPanel.Hide();
         createButton.Show();
+
+        OnUIModeChange?.Invoke(UIMode.begin);
     }
     public void EditMode()
     {
         createButton.Hide();
         editButton.Hide();
         editPanel.Show();
+
+        OnUIModeChange?.Invoke(UIMode.edit);
     }
     public void PlacementMode()
     {
         createButton.Hide();
         assetPanel.Show();
+
+        OnUIModeChange?.Invoke(UIMode.placement);
     }
     public void SelectionMode()
     {
@@ -37,5 +44,9 @@ public class UIManager : MonoBehaviour
         assetPanel.Hide();
         editPanel.Hide();
         editButton.Show();
+
+        OnUIModeChange?.Invoke(UIMode.selection);
     }
 }
+
+public enum UIMode { begin, edit, placement, selection};

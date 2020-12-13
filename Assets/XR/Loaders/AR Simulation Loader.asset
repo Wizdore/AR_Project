@@ -9,11 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34467decbd21dbd4e8516af9c4353807, type: 3}
-  m_Name: HierarchyHeaderSettings
+  m_Script: {fileID: 11500000, guid: e0a81a8e4c502874bba85236a26f338c, type: 3}
+  m_Name: AR Simulation Loader
   m_EditorClassIdentifier: 
-  maxLength: 28
-  minPrefixLength: 4
-  type: 0
-  customPrefix: 0
-  alignment: 0

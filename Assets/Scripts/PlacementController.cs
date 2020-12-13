@@ -2,58 +2,52 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(ARRaycastManager))]
 public class PlacementController : MonoBehaviour
 {
+    [HideInInspector] public bool inPlacementMode = false;
+    static List<ARRaycastHit> hits = new List<ARRaycastHit>();
 
-    [SerializeField]
-    private GameObject placedPrefab;
-
-    public GameObject PlacedPrefab
-    {
-        get 
-        {
-            return placedPrefab;
-        }
-        set 
-        {
-            placedPrefab = value;
-        }
-    }
+    [SerializeField] private ShapeFactory shapeFactory;
+    [SerializeField] private GameObject placementCrossHair;
 
     private ARRaycastManager arRaycastManager;
+    private Vector2 raycastOrigin;
 
+    [SerializeField] UnityEvent<GameObject> onObjectPlaced;
     void Awake() 
     {
+        raycastOrigin = new Vector2(Screen.width / 2f, Screen.height / 2f);
         arRaycastManager = GetComponent<ARRaycastManager>();
     }
 
-    bool TryGetTouchPosition(out Vector2 touchPosition)
+    public void PlaceObject()
     {
-        if(Input.touchCount > 0)
+        if (arRaycastManager.Raycast(raycastOrigin, hits, UnityEngine.XR.ARSubsystems.TrackableType.PlaneWithinPolygon))
         {
-            touchPosition = Input.GetTouch(0).position;
-            return true;
+            var hitPose = hits[0].pose;
+            GameObject placedPrefab = shapeFactory.GetShapeObect(hitPose.position, hitPose.rotation);
+            onObjectPlaced?.Invoke(placedPrefab);
         }
+    }
 
-        touchPosition = default;
-
-        return false;
+    public void SetPlacementMode(bool inplacement)
+    {
+        inPlacementMode = inplacement;
+        placementCrossHair.SetActive(inPlacementMode);
     }
 
     void Update()
     {
-        if(!TryGetTouchPosition(out Vector2 touchPosition))
+        if(!inPlacementMode)
             return;
 
-        if(arRaycastManager.Raycast(touchPosition, hits, UnityEngine.XR.ARSubsystems.TrackableType.PlaneWithinPolygon))
+        if(arRaycastManager.Raycast(raycastOrigin, hits, UnityEngine.XR.ARSubsystems.TrackableType.PlaneWithinPolygon))
         {
-            var hitPose = hits[0].pose;
-            Instantiate(placedPrefab, hitPose.position, hitPose.rotation);
+            placementCrossHair.transform.position = hits[0].pose.position;
         }
     }
 
-
-    static List<ARRaycastHit> hits = new List<ARRaycastHit>();
 }

@@ -41,8 +41,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4576066858576267199}
   - component: {fileID: 2923926283216731129}
-  m_Layer: 0
-  m_Name: Circle
+  - component: {fileID: 3793642051414631875}
+  m_Layer: 8
+  m_Name: ArShape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,8 +75,29 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.17, y: 0.17, z: 0.07}
+  m_Size: {x: 0.17, y: 0.17, z: 0.17}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3793642051414631875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2985187542145679596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07f7240d04968dc4ca2ed477c0eb5978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleCoeff: 2
+  selectionMarker: {fileID: 2162814194180579555}
+  shapeObject: {fileID: 3778002285204444676}
+  objectState:
+    startingPosition: {x: 0, y: 0, z: 0}
+    color: {r: 0, g: 0, b: 0, a: 0}
+    scale: 0
+    rotation: 0
+    lift: 0
 --- !u!1 &5830629655411794070
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,7 +109,7 @@ GameObject:
   - component: {fileID: 2827244098374993248}
   - component: {fileID: 3778002285204444676}
   m_Layer: 0
-  m_Name: circle
+  m_Name: shape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,7 +124,7 @@ Transform:
   m_GameObject: {fileID: 5830629655411794070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children:
   - {fileID: 2292823735093126269}
   m_Father: {fileID: 4576066858576267199}
@@ -148,7 +170,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1529071355430692878, guid: d2fe8944841d9f14484fa6fb26d55396, type: 3}
+  m_Sprite: {fileID: 7456925823560724526, guid: f6a0eb0154c25fd40a4c42fd300f0c73, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -168,7 +190,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2660933769260497036, guid: 3c13bec4e3f8c5f4aa1dc062b0b5a4db, type: 3}
       propertyPath: m_Name
-      value: Selector
+      value: SelectionVisualizer
       objectReference: {fileID: 0}
     - target: {fileID: 2883192665656443559, guid: 3c13bec4e3f8c5f4aa1dc062b0b5a4db, type: 3}
       propertyPath: m_RootOrder

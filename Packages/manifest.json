@@ -1,4 +1,13 @@
 {
+  "scopedRegistries": [
+    {
+      "name": "needle",
+      "url": "https://packages.needle.tools",
+      "scopes": [
+        "com.needle"
+      ]
+    }
+  ],
   "dependencies": {
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.collab-proxy": "1.3.9",
