@@ -1,5 +1,17 @@
 {
   "dependencies": {
+    "com.needle.xr.arsimulation": {
+      "version": "1.0.5",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.xr.arsubsystems": "3.1.0-preview.2",
+        "com.unity.xr.management": "3.0.5",
+        "com.unity.xr.arfoundation": "3.0.1",
+        "com.unity.xr.legacyinputhelpers": "2.0.8"
+      },
+      "url": "https://packages.needle.tools"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

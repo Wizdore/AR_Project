@@ -12,6 +12,7 @@ public class PlacementController : MonoBehaviour
 
     [SerializeField] private ShapeFactory shapeFactory;
     [SerializeField] private GameObject placementCrossHair;
+    [SerializeField] private GameObject arObjectsRoot;
 
     private ARRaycastManager arRaycastManager;
     private Vector2 raycastOrigin;
@@ -29,6 +30,7 @@ public class PlacementController : MonoBehaviour
         {
             var hitPose = hits[0].pose;
             GameObject placedPrefab = shapeFactory.GetShapeObect(hitPose.position, hitPose.rotation);
+            placedPrefab.transform.SetParent(arObjectsRoot.transform);
             onObjectPlaced?.Invoke(placedPrefab);
         }
     }
