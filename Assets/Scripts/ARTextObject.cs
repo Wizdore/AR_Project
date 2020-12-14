@@ -1,44 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-public class ARShapeObject : MonoBehaviour, IObjectControllable
+public class ARTextObject : MonoBehaviour, IObjectControllable
 {
-    public float scaleCoeff;
-
-    [SerializeField] private GameObject selectionMarker;
-    [SerializeField] private SpriteRenderer shapeObject;
-
+    public TextMeshPro text;
     [HideInInspector] public ObjectState objectState;
-
-    void Awake()
-    {
-        objectState.scale = 0.5f;
-    }
-
-    public ObjectState GetObjectState()
-    {
-        return objectState;
-    }
-    public void SetObjectState(ObjectState objstate)
-    {
-        objectState = objstate;
-    }
-
-    public void Select()
-    {
-        selectionMarker.SetActive(true);
-    }
-
-    public void DeSelect()
-    {
-        selectionMarker.SetActive(false);
-    }
+    public float scaleCoeff;
 
     public void ChangeColor(Color color)
     {
-        shapeObject.color = color;
         objectState.color = color;
+        text.color = color;
+    }
+    public void ChangeText(string txt)
+    {
+        text.text = txt;
     }
 
     public void ChangeLift(float lift)
@@ -68,11 +46,23 @@ public class ARShapeObject : MonoBehaviour, IObjectControllable
         transform.localScale = scl;
     }
 
-}
+    public void DeSelect()
+    {
+        text.fontMaterial.DisableKeyword("UNDERLAY_ON");
+    }
 
-[System.Serializable]
-public struct ObjectState {
-    public Vector3 startingPosition;
-    public Color color;
-    public float scale, rotation, lift;
+    public ObjectState GetObjectState()
+    {
+        return objectState;
+    }
+
+    public void Select()
+    {
+        text.fontMaterial.EnableKeyword("UNDERLAY_ON");
+    }
+
+    public void SetObjectState(ObjectState objstate)
+    {
+        objectState = objstate;
+    }
 }

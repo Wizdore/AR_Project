@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
+using TMPro;
 
 public class ShapeFactory : MonoBehaviour
 {
@@ -9,11 +11,29 @@ public class ShapeFactory : MonoBehaviour
     [SerializeField] private GameObject shapeSelectorButton;
 
     [SerializeField] public Sprite[] shapeSprites;
-    [SerializeField] private GameObject basePrefab;
+    [SerializeField] private GameObject basePrefab, baseTextPrefab;
 
-    int selectedShapeIdx;
+    [SerializeField] private string newTextString;
 
-    public void SetselectedShapeIdx(int idx) => selectedShapeIdx = idx;
+    [SerializeField] UnityEvent<GameObject> onObjectCreated;
+
+    public void SetNewTextString(string txt) => newTextString = txt;
+
+    public void CreateobejctFromSprite(int spriteIdx)
+    {
+        GameObject obj = Instantiate(basePrefab);
+        obj.GetComponentInChildren<SpriteRenderer>().sprite = shapeSprites[spriteIdx];
+
+        onObjectCreated?.Invoke(obj);
+    }
+
+    public void CreateobjectFromText()
+    {
+        GameObject obj = Instantiate(baseTextPrefab);
+        obj.GetComponentInChildren<ARTextObject>().ChangeText(newTextString);
+
+        onObjectCreated?.Invoke(obj);
+    }
 
     private void Awake()
     {
@@ -27,17 +47,8 @@ public class ShapeFactory : MonoBehaviour
             obj.transform.localScale = Vector3.one;
 
             int btnidx = i;
-            obj.GetComponent<Button>().onClick.AddListener(() => SetselectedShapeIdx(btnidx));
+            obj.GetComponent<Button>().onClick.AddListener(() => CreateobejctFromSprite(btnidx));
             i++;
         }
-    }
-
-    public GameObject GetShapeObect(Vector3 pos, Quaternion rot)
-    {
-        GameObject obj = Instantiate(basePrefab, pos, rot);
-
-        obj.GetComponentInChildren<SpriteRenderer>().sprite = shapeSprites[selectedShapeIdx];
-
-        return obj;
     }
 }

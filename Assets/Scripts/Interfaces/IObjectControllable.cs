@@ -3,6 +3,7 @@ using UnityEngine;
 
 public interface IObjectControllable{
     ObjectState GetObjectState();
+    void SetObjectState(ObjectState objstate);
     void Select();
     void DeSelect();
     void ChangeColor(Color color);

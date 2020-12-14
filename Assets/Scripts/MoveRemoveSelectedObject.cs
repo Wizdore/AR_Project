@@ -40,7 +40,7 @@ public class MoveRemoveSelectedObject : MonoBehaviour
             currentlySelected.DOScale(Vector3.zero, removeDuration)
                 .SetEase(removeAnim);
 
-            Destroy(currentlySelected.gameObject, removeDuration + 0.2f);
+            Destroy(currentlySelected.gameObject, removeDuration + 0.1f);
             currentlySelected = null;
         }
     }

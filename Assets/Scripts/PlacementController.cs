@@ -16,12 +16,16 @@ public class PlacementController : MonoBehaviour
     [SerializeField] private ShapeFactory shapeFactory;
     [SerializeField] private GameObject arObjectsRoot;
 
+    private GameObject placedPrefab;
+
     private ARRaycastManager arRaycastManager;
     private Vector2 raycastOrigin;
 
     [SerializeField] UnityEvent<GameObject> onObjectPlaced;
 
     bool isitfirstObject = true;
+
+    public void SetPrefabToPlace(GameObject obj) => placedPrefab = obj;
     void Awake() 
     {
         raycastOrigin = new Vector2(Screen.width / 2f, Screen.height / 2f);
@@ -30,12 +34,18 @@ public class PlacementController : MonoBehaviour
 
     public void PlaceObject()
     {
+        if (placedPrefab == null)
+            return;
+
         if (arRaycastManager.Raycast(raycastOrigin, hits, UnityEngine.XR.ARSubsystems.TrackableType.PlaneWithinPolygon))
         {
             var hitPose = hits[0].pose;
-            GameObject placedPrefab = shapeFactory.GetShapeObect(hitPose.position, hitPose.rotation);
+            placedPrefab.transform.position = hitPose.position;
+            placedPrefab.transform.rotation = hitPose.rotation;
+            ObjectState objState =  placedPrefab.GetComponent<IObjectControllable>().GetObjectState();
+            objState.startingPosition = hitPose.position;
+            placedPrefab.GetComponent<IObjectControllable>().SetObjectState(objState);
 
-            
             placedPrefab.transform.localScale = Vector3.zero;
             placedPrefab.transform.DOMoveY(hitPose.position.y + 0.2f, placementAnimDuration)
                 .SetEase(placementAnimEase).SetDelay(placementAnimDuration/3f);

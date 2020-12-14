@@ -11,7 +11,7 @@ public class SyncObjectStateWithUI : MonoBehaviour
     [Header("UI Controls")]
     [SerializeField] [Range(0f, 1f)] float lift;
     [SerializeField] [Range(0f, 1f)] float rotation;
-    [SerializeField] [Range(0f, 1f)] float scale = 0.5f;
+    [SerializeField] [Range(0f, 1f)] float scale;
     [SerializeField] Color color;
 
     public void SetCurrentObject(GameObject obj)
