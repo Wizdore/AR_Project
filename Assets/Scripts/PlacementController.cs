@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.Events;
+using DG.Tweening;
 
 [RequireComponent(typeof(ARRaycastManager))]
 public class PlacementController : MonoBehaviour
 {
-    [HideInInspector] public bool inPlacementMode = false;
+    [SerializeField] private float placementAnimDuration;
+    [SerializeField] private Ease placementAnimEase;
+
     static List<ARRaycastHit> hits = new List<ARRaycastHit>();
 
     [SerializeField] private ShapeFactory shapeFactory;
-    [SerializeField] private GameObject placementCrossHair;
     [SerializeField] private GameObject arObjectsRoot;
 
     private ARRaycastManager arRaycastManager;
@@ -30,25 +32,16 @@ public class PlacementController : MonoBehaviour
         {
             var hitPose = hits[0].pose;
             GameObject placedPrefab = shapeFactory.GetShapeObect(hitPose.position, hitPose.rotation);
+
+            
+            placedPrefab.transform.localScale = Vector3.zero;
+            placedPrefab.transform.DOMoveY(hitPose.position.y + 0.2f, placementAnimDuration)
+                .SetEase(placementAnimEase).SetDelay(placementAnimDuration/3f);
+            placedPrefab.transform.DOScale(Vector3.one, placementAnimDuration)
+                .SetEase(placementAnimEase);
+
             placedPrefab.transform.SetParent(arObjectsRoot.transform);
             onObjectPlaced?.Invoke(placedPrefab);
-        }
-    }
-
-    public void SetPlacementMode(bool inplacement)
-    {
-        inPlacementMode = inplacement;
-        placementCrossHair.SetActive(inPlacementMode);
-    }
-
-    void Update()
-    {
-        if(!inPlacementMode)
-            return;
-
-        if(arRaycastManager.Raycast(raycastOrigin, hits, UnityEngine.XR.ARSubsystems.TrackableType.PlaneWithinPolygon))
-        {
-            placementCrossHair.transform.position = hits[0].pose.position;
         }
     }
 
