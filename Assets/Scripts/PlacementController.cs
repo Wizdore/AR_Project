@@ -20,8 +20,6 @@ public class PlacementController : MonoBehaviour
     private Vector2 raycastOrigin;
 
     [SerializeField] UnityEvent<GameObject> onObjectPlaced;
-
-    bool isitfirstObject = true;
     void Awake() 
     {
         raycastOrigin = new Vector2(Screen.width / 2f, Screen.height / 2f);
@@ -41,13 +39,6 @@ public class PlacementController : MonoBehaviour
                 .SetEase(placementAnimEase).SetDelay(placementAnimDuration/3f);
             placedPrefab.transform.DOScale(Vector3.one, placementAnimDuration)
                 .SetEase(placementAnimEase);
-
-            if(isitfirstObject)
-            {
-                arObjectsRoot.transform.position = placedPrefab.transform.position;
-                arObjectsRoot.transform.rotation = placedPrefab.transform.rotation;
-                isitfirstObject = false;
-            }
 
             placedPrefab.transform.SetParent(arObjectsRoot.transform);
             onObjectPlaced?.Invoke(placedPrefab);
