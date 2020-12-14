@@ -24,6 +24,8 @@ public class ShapeFactory : MonoBehaviour
             obj.transform.GetChild(0).GetComponent<Image>().sprite = sprite;
             obj.transform.SetParent(buttonHolder);
 
+            obj.transform.localScale = Vector3.one;
+
             int btnidx = i;
             obj.GetComponent<Button>().onClick.AddListener(() => SetselectedShapeIdx(btnidx));
             i++;

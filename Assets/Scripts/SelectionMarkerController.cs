@@ -19,12 +19,12 @@ public class SelectionMarkerController : MonoBehaviour
 
     public void SetSelectionMarker(GameObject newSelection)
     {
-        IObjectControllable nc = newSelection.GetComponent<IObjectControllable>();
+        IObjectControllable nc = newSelection?.GetComponent<IObjectControllable>();
         nc?.Select();
 
         if (previousSelection != null)
         {
-            IObjectControllable pc = previousSelection.GetComponent<IObjectControllable>();
+            IObjectControllable pc = previousSelection?.GetComponent<IObjectControllable>();
             pc?.DeSelect();
         }
 
